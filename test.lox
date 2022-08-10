@@ -1,1 +1,10 @@
-{{}}
+{{"teset"
+foo=5.3
+{{}}}}
+"test2"
+5655"test"3
+this
+/*
+this is ignored /* dfdfd */ 
+*/
+bar

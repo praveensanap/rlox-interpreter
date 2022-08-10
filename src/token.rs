@@ -4,7 +4,7 @@ use std::fmt;
 pub struct Token {
     ttype: TokenType,
     lexeme: String,
-    literal: Object,
+    literal: Option<Object>,
     line: usize,
 }
 
@@ -18,7 +18,7 @@ pub enum Object {
 }
 
 impl Token {
-    pub fn new(ttype: TokenType, lexeme: String, literal: Object, line: usize) -> Token {
+    pub fn new(ttype: TokenType, lexeme: String, literal: Option<Object>, line: usize) -> Token {
         Token {
             ttype,
             lexeme,
@@ -30,7 +30,7 @@ impl Token {
         Token {
             ttype: TokenType::Eof,
             lexeme: "".to_string(),
-            literal: Object::Nil,
+            literal: Some(Object::Nil),
             line,
         }
     }
@@ -50,13 +50,11 @@ impl fmt::Display for Object {
 
 impl fmt::Display for Token {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(
-            f,
-            "{:?} {} {}",
-            self.lexeme,
-            self.literal.to_string(),
-            self.line
-        )
+        let literal = match &self.literal {
+            None => "None".to_string(),
+            Some(v) => v.to_string(),
+        };
+        write!(f, "{:?} {} {}", self.lexeme, literal, self.line)
     }
 }
 
